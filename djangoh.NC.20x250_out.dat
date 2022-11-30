@@ -1,0 +1,1225 @@
+*******************************************************************************
+
+                                   HERACLES 
+
+               Event generator for deep-inelastic e-P collisions 
+                        including radiative corrections  
+
+                           VERSION 4.6.10, 07.08.2013 
+
+
+
+                                H. Spiesberger 
+
+ ******************************************************************************
+
+
+
+
+
+
+*******************************************************************************
+
+                    FINAL DEFINITION OF RUN PARAMETERS
+                               FOR HERACLES           
+
+*******************************************************************************
+
+
+
+ *****  PROPERTIES OF THE ELECTRON BEAM  *****
+
+           ENERGY OF INCIDENT ELECTRON =      20.0 GEV
+           MOMENTUM OF INCIDENT ELECTRON =    20.0 GEV/C
+           ELECTRON MASS = 0.00051100 GEV/C**2
+           CHARGE OF INCIDENT ELECTRON = -1
+           DEGREE OF ELECTRON BEAM POLARIZATION =  0.0000
+
+
+
+ *****  PROPERTIES OF THE PROTON BEAM  *****
+
+           ENERGY OF INCIDENT PROTON =     275.0 GEV
+           MOMENTUM OF INCIDENT PROTON =   275.0 GEV/C
+           DEGREE OF PROTON BEAM POLARIZATION =  0.0000
+           PROTON MASS = 0.9383 GEV/C**2
+
+
+           CMS ENERGY SQUARED  S = 2.20008E+04 GEV**2
+
+
+
+ *****  KINEMATICAL LIMITS FOR GENERATED EVENTS  *****
+
+           XMIN= 1.00000E-03   XMAX= 9.99948E-01
+           Q2MIN= 1.00000E+00 GEV**2, 
+           Q2MAX= 2.08989E+04 GEV**2
+           WMIN= 1.40000E+00 GEV                  (ACTIVE ONLY FOR ICUT=2)
+           YMIN= 1.00000E-02   YMAX= 9.50000E-01  (ACTIVE ONLY FOR ICUT=3)
+           ICUT= 3
+
+           NOTE: Q2MIN/Q2MAX MODIFIED FOR CONSISTENCY WITH
+           MINIMUM ALLOWED W, X, Y
+
+           XMAX MODIFIED, VALUES >= 1 NOT ALLOWED 
+
+
+
+ *****  PARAMETERS FOR EL-WEAK THEORY  *****
+
+           IFIX = 2           IFIX=1 : MW FIXED
+                                  =2 : GF FIXED
+
+           BOSON MASSES:   MW =    80.3767 GEV,
+                           MZ =    91.1867 GEV,   SW2 =     0.2230
+           BOSON WIDTHS:   GW =     1.9718 GEV,    GZ =     2.3529
+           FERMION MASSES: MU =     0.0620 GEV,  MC =     1.5000 GEV
+                           MD =     0.0830 GEV,  MB =     4.5000 GEV
+                           MS =     0.2150 GEV,  MT =   175.0000 GEV
+           HIGGS MASS:     MH =   150.0000 GEV
+
+
+
+ *****  OPTIONS FOR PARTON DISTRIBUTIONS OR      *****
+ *****  STRUCTURE FUNCTIONS                      *****
+
+           WARNING: ONLY LEPTONIC CORRECTIONS AND SELF ENRGIES
+           CAN BE APPLIED FOR STRUCTURE FUNCTION INPUT
+           OR IF F_L IS INCLUDED 
+           LPAR(13...16) ARE SET TO 0
+
+           USING PATH TO PDFSETS: 
+          ./PDFsets                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
+1                                                                              
+ ******************************************************************************
+ ******************************************************************************
+ **                                                                          **
+ **                                                                          **
+ **              *......*                  Welcome to the Lund Monte Carlo!  **
+ **         *:::!!:::::::::::*                                               **
+ **      *::::::!!::::::::::::::*          PPP  Y   Y TTTTT H   H III   A    **
+ **    *::::::::!!::::::::::::::::*        P  P  Y Y    T   H   H  I   A A   **
+ **   *:::::::::!!:::::::::::::::::*       PPP    Y     T   HHHHH  I  AAAAA  **
+ **   *:::::::::!!:::::::::::::::::*       P      Y     T   H   H  I  A   A  **
+ **    *::::::::!!::::::::::::::::*!       P      Y     T   H   H III A   A  **
+ **      *::::::!!::::::::::::::* !!                                         **
+ **      !! *:::!!:::::::::::*    !!       This is PYTHIA version 6.428      **
+ **      !!     !* -><- *         !!       Last date of change:  5 Sep 2013  **
+ **      !!     !!                !!                                         **
+ **      !!     !!                !!       Now is  0 Jan 2000 at  0:00:00    **
+ **      !!                       !!                                         **
+ **      !!        lh             !!       Disclaimer: this program comes    **
+ **      !!                       !!       without any guarantees. Beware    **
+ **      !!                 hh    !!       of errors and use common sense    **
+ **      !!    ll                 !!       when interpreting results.        **
+ **      !!                       !!                                         **
+ **      !!                                Copyright T. Sjostrand (2011)     **
+ **                                                                          **
+ ** An archive of program versions and documentation is found on the web:    **
+ ** http://www.thep.lu.se/~torbjorn/Pythia.html                              **
+ **                                                                          **
+ ** When you cite this program, the official reference is to the 6.4 manual: **
+ ** T. Sjostrand, S. Mrenna and P. Skands, JHEP05 (2006) 026                 **
+ ** (LU TP 06-13, FERMILAB-PUB-06-052-CD-T) [hep-ph/0603175].                **
+ **                                                                          **
+ ** Also remember that the program, to a large extent, represents original   **
+ ** physics research. Other publications of special relevance to your        **
+ ** studies may therefore deserve separate mention.                          **
+ **                                                                          **
+ ** Main author: Torbjorn Sjostrand; Department of Theoretical Physics,      **
+ **   Lund University, Solvegatan 14A, S-223 62 Lund, Sweden;                **
+ **   phone: + 46 - 46 - 222 48 16; e-mail: torbjorn@thep.lu.se              **
+ ** Author: Stephen Mrenna; Computing Division, GDS Group,                   **
+ **   Fermi National Accelerator Laboratory, MS 234, Batavia, IL 60510, USA; **
+ **   phone: + 1 - 630 - 840 - 2556; e-mail: mrenna@fnal.gov                 **
+ ** Author: Peter Skands; CERN/PH-TH, CH-1211 Geneva, Switzerland            **
+ **   phone: + 41 - 22 - 767 24 47; e-mail: peter.skands@cern.ch             **
+ **                                                                          **
+ **                                                                          **
+ ******************************************************************************
+ ******************************************************************************
+1****************** PYINIT: initialization of PYTHIA routines *****************
+
+ ********************** PYINIT: initialization completed **********************
+
+           PARTON DISTRIBUTIONS TAKEN FROM PDFLIB   *****
+
+           OR FROM LHAPDF VIA CALLS THROUGH PYTHIA  *****
+           WITH IDENTIFICATION CODE IVAL = 10150
+
+ *****  LOW Q2 MODEL FOR STRUCTURE FUNCTIONS:    *****
+
+           ILQMOD =  0
+
+           ILQMOD =  0: UNMODIFIED PARTON DISTRIBUTIONS
+                  =  1: LOW Q2 SUPPRESSED PDF    
+                  =  2: BRASSE AND STEIN WITH PDF           
+                  =  3: ALLM(1997) WITH PDF  
+                  =  4: BADELEK AND KWIECINSKI WITH PDF 
+                  =  5: DONNACHIE AND LANDSHOFF WITH PDF 
+                       (FOR DETAILS, SEE THE MANUAL )
+                  = 10: STRUCTURE FUNCTIONS FROM USER ROUTINE
+
+
+
+ *****  LONGITUDINAL STRUCTURE FUNCTION INCLUDED *****
+           QCD CONTRIBUTION TO F_L: LQCD =   1
+           TARGET MASS EFFECTS:      LTM =   1
+           HIGHER TWIST:             LHT =   1
+
+
+
+ *****  DETERMINATION OF ALPHA_S NEEDED FOR F_L: *****
+           ORDER OF ALPHA_S IN ULALPS: MST111 =     1
+           TREATMENT OF SINGULARITY:   MST115 =     0
+           FIX ALPHA_S VALUE:          PAR111 =     0.2000
+           LAMBDA IN RUNNING ALPHA_S:  PAR112 =     0.2350
+
+           ACCUARCY IN FL-INTEGRATION: PARL11 =     0.0100
+           PARAMETER FOR HIGHER TWIST: PARL19 =     0.0300
+
+
+
+ *****  NOTE: LOW Q2 BEHAVIOUR OF F_L IS DETERMINED ****
+              BY THE VALUE OF ILQMOD, 
+              SEE MANUAL FOR DETAILS 
+
+
+ *****  OPTIONS FOR VIRT&SOFT CONTRIBUTION         *****
+
+
+ PARAMETER LIST
+ *******************************************************
+ **      BORN CROSS SECTION:    LPAR( 1) =      1     **
+ **      1-LOOP CORRECTIONS:    LPAR( 2) =      0     **
+ **      HIGHER ORDERS:         LPAR( 3) =      3     **
+ **      MW OR GMU FIXED:       LPAR( 4) =      2     **
+ **      MASS PARAM FROM INPUT: LPAR( 5) =      0     **
+ **      STRUCTURE FUNCTIONS:   LPAR( 6) = 123041     **
+ **      SIGMA-GAMMA:           LPAR( 7) =      2     **
+ **      SIGMA-GAMMA-Z:         LPAR( 8) =      1     **
+ **      SIGMA-Z:               LPAR( 9) =      1     **
+ **      SIGMA-W:               LPAR(10) =      1     **
+ **      QED CORRECTIONS:       LPAR(11) =      1     **
+ **      LEPTONIC QED:          LPAR(12) =      1     **
+ **      HADRONIC QED:          LPAR(13) =      0     **
+ **      LEPTON-QUARK-INTRF:    LPAR(14) =      0     **
+ **      WEAK CORRECTIONS:      LPAR(15) =      0     **
+ **      WEAK BOXES:            LPAR(16) =      0     **
+ **      GAMMA OR/AND Z         LPAR(17) =      1     **
+ **      NOT USED:              LPAR(18) =      2     **
+ **      NOT USED:              LPAR(19) =      0     **
+ **      NOT USED:              LPAR(20) =      0     **
+ *******************************************************
+
+
+
+
+ *****  OPTIONS FOR INTEGRATION / SAMPLING  *****
+
+           INT2(I)    1   0   0   0   0
+           INT3(I)    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+           ISAM2(I)   1   0   0   0   0
+           ISAM3(I)   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+
+
+ *****  NUMBER OF EVENTS TO BE SAMPLED  *****
+
+           NUMBER OF EVENTS REQUESTED  NEVENT =      100000
+
+
+
+
+
+ *** NO STANDARD HERACLES INPUT FILE ASSIGNED TO UNIT  9
+ *** COLD START OF HERACLES ASSUMED
+
+
+
+      START INTEGRATION FOR NEUTRAL CURRENT / ELASTIC + SOFT&VIRTUAL     
+1****************** PYINIT: initialization of PYTHIA routines *****************
+ ==== PYTHIA WILL USE LHAPDF ====
+ nsets=           1
+ *************************************
+ *       LHAPDF Version 5.9.1        *
+ *   Configured for the following:   *
+ *             All PDFs              *
+ *         FULL MEMORY option        *
+ *    Maximum  3 concurrent set(s)   *
+ *************************************
+
+ >>>>>> PDF description: <<<<<<
+ CTEQ6.1                                                         
+ Reference:                                                      
+ J. Pumplin, D.R. Stump, J. Huston, H.L. Lai                     
+ W.K. Tung, S. Kuhlmann, J. Owens                                
+ hep-ph/0303013                                                  
+ This set has 41 member PDFs.                                    
+     mem=0 --> central value (cteq61m)                           
+     mem=1-40 --> 20 sets of +ve/-ve error values                
+ >>>>>>                   <<<<<<
+
+ ==============================================
+ PDFset name ./PDFsets/cteq61.LHgrid                                                         
+ with         40 members
+ ====  initialized. ===========================
+ Strong coupling at Mz for PDF is:  0.11798
+
+ ********************** PYINIT: initialization completed **********************
+ Warning: x=0.100E+01 or Q2=0.220E+05 outside grid, for FL interpolation
+          value on grid limit used. Only first   10 warnings printed.
+
+
+
+ CROSS SECTION (WITH ERROR ESTIMATE) FOR THE CHANNEL:
+     NEUTRAL CURRENT / ELASTIC + SOFT&VIRTUAL     
+       2.5512E+02 +/-   2.5512E-02  NB
+      RELATIVE ACCURACY REQUIRED:   1.0D-04
+
+
+
+ ACTUAL CROSS SECTION VALUES (WITH ERROR ESTIMATES) AFTER INTEGRATION
+
+
+ ** NEUTRAL CURRENT: 
+
+    VIRTUAL & SOFT CONTRIBUTIONS  SIG2     2.5512E+02 +/-   2.5512E-02  NB
+    INITIAL STATE LEPTONIC RADIATION       0.0000E+00 +/-   0.0000E+00  NB
+    FINAL STATE LEPTONIC RADIATION         0.0000E+00 +/-   0.0000E+00  NB
+    COMPTON CONTRIBUTION                   0.0000E+00 +/-   0.0000E+00  NB
+    QUARKONIC RADIATION                    0.0000E+00 +/-   0.0000E+00  NB
+
+ ** CHARGED CURRENT: 
+
+    VIRTUAL & SOFT CONTRIBUTIONS  SIG2C    0.0000E+00 +/-   0.0000E+00  NB
+    LEPTONIC RADIATION (1/k.p)   SIG31C    0.0000E+00 +/-   0.0000E+00  NB
+    QUARKONIC RADIATION (1/k.q)  SIG32C    0.0000E+00 +/-   0.0000E+00  NB
+    LEPTONIC RADIATION (1/k.qs)  SIG33C    0.0000E+00 +/-   0.0000E+00  NB
+
+ ** ELASTIC TAIL: 
+
+    ELASTIC EP WITH CORRECTIONS            0.0000E+00 +/-   0.0000E+00  NB
+    INITIAL STATE LEPTONIC RADIATION       0.0000E+00 +/-   0.0000E+00  NB
+    FINAL STATE LEPTONIC RADIATION         0.0000E+00 +/-   0.0000E+00  NB
+    COMPTON CONTRIBUTION                   0.0000E+00 +/-   0.0000E+00  NB
+
+ ** TOTAL CROSS SECTION:                   2.5512E+02 +/-   2.5512E-02  NB
+
+ *** SAMPLING INFORMATION FOR ALL CHANNELS WRITTEN ONTO UNIT LUNDAT=  9
+
+
+
+*******************************************************************************
+                                                         
+                                    DJANGOH              
+                                  version 1.7            
+                                                         
+                       HERACLES 4.6.10  +  LEPTO 6.5.1   
+                                                         
+                             author: H.Spiesberger       
+                         with major contributions from   
+                          G.A.Schuler and K.Charchula    
+                                                         
+                       last change: 07 Aug 2013 (by HS)  
+                                                         
+ ******************************************************************************
+
+
+
+
+ *****NEXT CONTROL CARD ***** SOPHIA    
+
+      WSOPHIA=   1.5000E+00
+
+
+ *****NEXT CONTROL CARD ***** OUT-LEP   
+
+      LST(4)=  1
+
+
+ *****NEXT CONTROL CARD ***** FRAG      
+
+      LST(7)=  1
+
+
+ *****NEXT CONTROL CARD ***** CASCADES  
+
+      LST(8)= 12
+
+
+ *****NEXT CONTROL CARD ***** MAX-VIRT  
+
+      LST(9)=  5
+
+
+ *****NEXT CONTROL CARD ***** CONTINUE  
+
+ the outputfile will be named: outfiles/djangoh.NC.20x250_evt.dat
+ P(2,5)=  0.938300014     K(2,2)=        2212
+ **********************  Warning  ***********************
+ Minimum of hadronic final state mass (  1.4 GeV)
+ is less than 5 GeV. 
+ Phase space might be reduced and the total cross section
+ possibly be renormalized.
+ The correct value for the total cross section is stored in ---> PARL(24) <---
+ ********************************************************
+
+ Cross-section from HERACLES = 0.25512E+06 pb
+ Estimated relative error =     0.10E-03
+
+
+
+ CROSS SECTIONS ACTUALLY APPLIED FOR SAMPLING (IN NANOBARN): 
+
+ TOTAL CROSS SECTION,  SIGTOT =                2.5512E+02 +/- 2.5512E-02
+
+NEUTRAL CURRENT / ELASTIC + SOFT&VIRTUAL       2.5512E+02 +/- 2.5512E-02
+
+
+ ***** Event No        10000
+
+ CHANNEL =   1         X            Y            Q2
+ leptonic:          0.209E-02    0.438E-01    0.202E+01
+ hadronic:          0.209E-02    0.438E-01    0.202E+01
+ scaled:            0.209E-02    0.438E-01    0.202E+01
+-----------         Px          Py          Pz          E           M
+ HS e-scat:      -0.8641      1.0872     19.0983     19.1487      0.0005
+ HS q-scat:       0.8641     -1.0872      0.3264      1.4266      0.0000
+ HS ga-rad:       0.0000      0.0000      0.0000      0.0000      0.0000
+
+ LST(21) =   0
+
+
+
+                            Event listing (summary)
+
+    I  particle/jet KS     KF orig    p_x      p_y      p_z       E        m
+
+    1  !e-!         21     11    0    0.000    0.000   20.000   20.000    0.001
+    2  !p+!         21   2212    0    0.000    0.000 -274.998  275.000    0.938
+    3  !Z0!         21     23    1    0.864   -1.087    0.902    0.851   -1.420
+    4  e-            1     11    1   -0.864    1.087   19.098   19.149    0.001
+    5  !g!          21     21    2    0.286    0.176   -4.969    4.981   -0.000
+    6  !u!          21      2    5    0.245    0.607   -3.689    3.611   -1.000
+    7  !u!          21      2    6    0.424    0.035    0.723    0.838    0.006
+    8  !g!          21     21    6    0.680   -0.508   -3.509    3.610    0.000
+    9  (u)          13      2    6    0.338    0.028    0.576    0.669    0.006
+   10  (g)          13     21    6    0.211    0.189   -2.587    2.603    0.000
+   11  (g)          13     21    6    0.555   -0.690   -0.775    1.177    0.000
+   12  (ud_1)       13   2103    2   -0.260   -0.200 -257.359  257.360    0.450
+   13  (u~)         13     -2    2    0.041   -0.430   -1.280    1.370    0.225
+   14  (u)          13      2    2   -0.020    0.016  -12.673   12.675    0.225
+   15  (u)       A  12      2    9    0.338    0.028    0.576    0.669    0.006
+   16  (u~)      V  11     -2   13    0.041   -0.430   -1.280    1.370    0.225
+   17  (u)       A  12      2   14   -0.020    0.016  -12.673   12.675    0.225
+   18  (g)       I  12     21   11    0.555   -0.690   -0.775    1.177    0.000
+   19  (g)       I  12     21   10    0.211    0.189   -2.587    2.603    0.000
+   20  (ud_1)    V  11   2103   12   -0.260   -0.200 -257.359  257.360    0.450
+   21  (string)     11     92   15    0.378   -0.403   -0.704    2.038    1.832
+   22  (K*+)        11    323   21    0.264   -0.104   -0.509    1.080    0.909
+   23  (K*-)        11   -323   21    0.114   -0.298   -0.194    0.958    0.882
+   24  (string)     11     92   17    0.486   -0.685 -273.394  273.814   15.134
+   25  (rho+)       11    213   24    0.050   -0.022   -5.731    5.780    0.747
+   26  (rho0)       11    113   24    0.224    0.109   -9.024    9.057    0.738
+   27  pi-           1   -211   24    0.785   -0.013   -1.953    2.109    0.140
+   28  pi+           1    211   24   -0.834   -0.170   -5.416    5.484    0.140
+   29  (pi0)        11    111   24    0.461   -0.753   -4.428    4.517    0.135
+   30  (eta)        11    221   24   -0.156    0.188  -20.079   20.088    0.548
+   31  pi-           1   -211   24    0.048    0.054   -4.298    4.301    0.140
+   32  (pi0)        11    111   24   -0.422   -0.334  -69.845   69.847    0.135
+   33  p+            1   2212   24    0.062   -0.087 -109.118  109.122    0.938
+   34  (eta)        11    221   24    0.267    0.343  -43.503   43.508    0.548
+   35  (K0)         11    311   22    0.155    0.071   -0.615    0.809    0.498
+   36  pi+           1    211   22    0.109   -0.175    0.106    0.271    0.140
+   37  (K~0)        11   -311   23    0.334   -0.130   -0.049    0.615    0.498
+   38  pi-           1   -211   23   -0.220   -0.168   -0.146    0.343    0.140
+   39  pi+           1    211   25   -0.257   -0.114   -4.094    4.106    0.140
+   40  (pi0)        11    111   25    0.308    0.092   -1.637    1.674    0.135
+   41  pi+           1    211   26    0.337    0.110   -8.391    8.400    0.140
+   42  pi-           1   -211   26   -0.113   -0.001   -0.632    0.657    0.140
+   43  gamma         1     22   29    0.153   -0.268   -1.243    1.280    0.000
+   44  gamma         1     22   29    0.308   -0.484   -3.185    3.237    0.000
+   45  pi+           1    211   30   -0.109   -0.005   -3.168    3.173    0.140
+   46  pi-           1   -211   30    0.027    0.134  -10.772   10.774    0.140
+   47  (pi0)        11    111   30   -0.074    0.059   -6.139    6.142    0.135
+   48  gamma         1     22   32   -0.325   -0.301  -50.981   50.983    0.000
+   49  gamma         1     22   32   -0.096   -0.033  -18.864   18.864    0.000
+   50  (pi0)        11    111   34    0.018    0.045  -12.508   12.508    0.135
+   51  (pi0)        11    111   34    0.016    0.213  -11.666   11.669    0.135
+   52  (pi0)        11    111   34    0.233    0.086  -19.329   19.331    0.135
+   53  K_L0          1    130   35    0.155    0.071   -0.615    0.809    0.498
+   54  (K_S0)       11    310   37    0.334   -0.130   -0.049    0.615    0.498
+   55  gamma         1     22   40    0.074    0.063   -0.739    0.745    0.000
+   56  gamma         1     22   40    0.233    0.030   -0.898    0.929    0.000
+   57  gamma         1     22   47   -0.090    0.018   -2.127    2.129    0.000
+   58  gamma         1     22   47    0.016    0.041   -4.013    4.013    0.000
+   59  gamma         1     22   50   -0.050   -0.006   -6.858    6.858    0.000
+   60  gamma         1     22   50    0.068    0.050   -5.650    5.651    0.000
+   61  gamma         1     22   51    0.045    0.012   -1.541    1.542    0.000
+   62  gamma         1     22   51   -0.028    0.201  -10.125   10.127    0.000
+   63  gamma         1     22   52    0.095    0.101  -11.449   11.450    0.000
+   64  gamma         1     22   52    0.138   -0.015   -7.880    7.881    0.000
+   65  pi-           1   -211   54    0.311    0.089   -0.023    0.353    0.140
+   66  pi+           1    211   54    0.023   -0.219   -0.026    0.262    0.140
+                   sum:  0.00         0.000   -0.000 -254.999  295.001  148.327
+
+ AVERAGE TIME PER EVENT AFTER      10000 EVENTS:    4.87E-04 SEC
+
+
+ ***** Event No        20000
+
+ CHANNEL =   1         X            Y            Q2
+ leptonic:          0.367E-01    0.258E-01    0.209E+02
+ hadronic:          0.367E-01    0.258E-01    0.209E+02
+ scaled:            0.367E-01    0.258E-01    0.209E+02
+-----------         Px          Py          Pz          E           M
+ HS e-scat:       2.5030      3.7502     19.2229     19.7445      0.0005
+ HS q-scat:      -2.5031     -3.7503     -9.3274     10.3601      0.0000
+ HS ga-rad:       0.0000      0.0000      0.0000      0.0000      0.0000
+
+ LST(21) =   0
+
+
+
+                            Event listing (summary)
+
+    I  particle/jet KS     KF orig    p_x      p_y      p_z       E        m
+
+    1  !e-!         21     11    0    0.000    0.000   20.000   20.000    0.001
+    2  !p+!         21   2212    0    0.000    0.000 -274.998  275.000    0.938
+    3  !Z0!         21     23    1   -2.503   -3.750    0.777    0.255   -4.568
+    4  e-            1     11    1    2.503    3.750   19.223   19.745    0.001
+    5  !g!          21     21    2   -0.169   -0.520  -29.346   29.351   -0.000
+    6  !u!          21      2    5   -0.744   -0.482  -14.202   14.194   -1.000
+    7  !u!          21      2    6   -3.233   -4.212  -13.318   14.337    0.006
+    8  (u)          13      2    0   -3.233   -4.212  -13.318   14.337    0.006
+    9  (uu_1)       13   2203    2    0.233    0.473 -218.606  218.607    0.450
+   10  (u~)         13     -2    2    0.575   -0.038  -15.144   15.157    0.225
+   11  (d)          13      1    2   -0.078    0.026  -27.155   27.156    0.225
+   12  (u)       A  12      2    8   -3.233   -4.212  -13.318   14.337    0.006
+   13  (uu_1)    V  11   2203    9    0.233    0.473 -218.606  218.607    0.450
+   14  (d)       A  12      1   11   -0.078    0.026  -27.155   27.156    0.225
+   15  (u~)      V  11     -2   10    0.575   -0.038  -15.144   15.157    0.225
+   16  (cluster)    11     91   14    0.497   -0.012  -42.300   42.313    0.955
+   17  (pi0)        11    111   16   -0.243   -0.073  -16.899   16.901    0.135
+   18  pi-           1   -211   16    0.740    0.061  -25.401   25.412    0.140
+   19  (string)     11     92   12   -3.000   -3.738 -231.924  232.944   21.247
+   20  p+            1   2212   19   -0.945   -2.125   -8.912    9.258    0.938
+   21  pi-           1   -211   19   -1.480   -0.211   -4.136    4.400    0.140
+   22  (Sigma*~+)   11  -3114   19   -0.025   -0.821   -4.808    5.061    1.352
+   23  (K*-)        11   -323   19   -0.410   -0.464   -8.350    8.417    0.863
+   24  (rho+)       11    213   19   -0.201    0.066  -13.785   13.810    0.797
+   25  (rho-)       11   -213   19   -0.076   -0.235  -16.917   16.943    0.904
+   26  (Delta++)    11   2224   19    0.088   -0.876  -31.774   31.809    1.199
+   27  (eta)        11    221   19    0.049    0.929 -143.242  143.246    0.548
+   28  gamma         1     22   17   -0.079   -0.061   -3.472    3.474    0.000
+   29  gamma         1     22   17   -0.164   -0.012  -13.427   13.428    0.000
+   30  (Lambda~0)   11  -3122   22    0.036   -0.545   -3.433    3.651    1.116
+   31  pi+           1    211   22   -0.061   -0.276   -1.375    1.410    0.140
+   32  K-            1   -321   23   -0.534   -0.490   -6.817    6.873    0.494
+   33  (pi0)        11    111   23    0.124    0.026   -1.533    1.544    0.135
+   34  pi+           1    211   24    0.166    0.291   -7.210    7.220    0.140
+   35  (pi0)        11    111   24   -0.367   -0.226   -6.575    6.590    0.135
+   36  pi-           1   -211   25   -0.224    0.153  -12.652   12.655    0.140
+   37  (pi0)        11    111   25    0.148   -0.388   -4.265    4.287    0.135
+   38  p+            1   2212   26    0.255   -0.689  -26.833   26.860    0.938
+   39  pi+           1    211   26   -0.167   -0.187   -4.941    4.949    0.140
+   40  gamma         1     22   27    0.289    0.652  -94.271   94.273    0.000
+   41  gamma         1     22   27   -0.240    0.276  -48.972   48.973    0.000
+   42  p~-           1  -2212   30    0.003   -0.534   -3.198    3.375    0.938
+   43  pi+           1    211   30    0.033   -0.011   -0.235    0.276    0.140
+   44  gamma         1     22   33    0.110    0.000   -1.477    1.481    0.000
+   45  gamma         1     22   33    0.014    0.025   -0.056    0.063    0.000
+   46  gamma         1     22   35   -0.135   -0.153   -3.462    3.468    0.000
+   47  gamma         1     22   35   -0.232   -0.073   -3.113    3.122    0.000
+   48  gamma         1     22   37    0.047   -0.125   -2.066    2.071    0.000
+   49  gamma         1     22   37    0.101   -0.263   -2.199    2.217    0.000
+                   sum:  0.00        -0.000   -0.000 -255.001  295.002  148.327
+
+ AVERAGE TIME PER EVENT AFTER      20000 EVENTS:    4.60E-04 SEC
+
+
+ ***** Event No        30000
+
+ CHANNEL =   1         X            Y            Q2
+ leptonic:          0.187E-02    0.256E-01    0.105E+01
+ hadronic:          0.187E-02    0.256E-01    0.105E+01
+ scaled:            0.187E-02    0.256E-01    0.105E+01
+-----------         Px          Py          Pz          E           M
+ HS e-scat:       0.8207      0.5911     19.4755     19.5017      0.0005
+ HS q-scat:      -0.8207     -0.5911      0.0113      1.0115      0.0000
+ HS ga-rad:       0.0000      0.0000      0.0000      0.0000      0.0000
+
+ LST(21) =   0
+
+
+
+                            Event listing (summary)
+
+    I  particle/jet KS     KF orig    p_x      p_y      p_z       E        m
+
+    1  !e-!         21     11    0    0.000    0.000   20.000   20.000    0.001
+    2  !p+!         21   2212    0    0.000    0.000 -274.998  275.000    0.938
+    3  !Z0!         21     23    1   -0.821   -0.591    0.525    0.498   -1.025
+    4  e-            1     11    1    0.821    0.591   19.475   19.502    0.001
+    5  !g!          21     21    2    0.288    0.426   -9.794    9.808   -0.000
+    6  !g!          21     21    5    0.553    0.811   -6.368    6.350   -1.094
+    7  !c!          21      4    6    0.727   -0.425   -3.644    3.976    1.350
+    8  !c~!         21     -4    6   -0.969    0.664   -2.183    2.823    1.350
+    9  (c)          13      4    6    0.727   -0.425   -3.644    3.976    1.350
+   10  (g)          13     21    5   -0.266   -0.385   -3.426    3.458    0.000
+   11  (ud_0)       13   2101    2    0.442    0.187  -11.530   11.549    0.450
+   12  (c~)         13     -4    6   -0.969    0.664   -2.183    2.823    1.350
+   13  (u)          13      2    2   -0.756   -0.632 -253.693  253.695    0.225
+   14  (c)       A  12      4    9    0.727   -0.425   -3.644    3.976    1.350
+   15  (ud_0)    V  11   2101   11    0.442    0.187  -11.530   11.549    0.450
+   16  (u)       A  12      2   13   -0.756   -0.632 -253.693  253.695    0.225
+   17  (g)       I  12     21   10   -0.266   -0.385   -3.426    3.458    0.000
+   18  (c~)      V  11     -4   12   -0.969    0.664   -2.183    2.823    1.350
+   19  (cluster)    11     91   14    1.170   -0.238  -15.174   15.525    3.058
+   20  n0            1   2112   19    0.551    0.263   -5.321    5.438    0.940
+   21  (D*+)        11    413   19    0.619   -0.500   -9.853   10.087    2.010
+   22  (string)     11     92   16   -1.991   -0.353 -259.302  259.975   18.589
+   23  (rho+)       11    213   22   -0.139   -0.460  -91.210   91.212    0.401
+   24  pi-           1   -211   22    0.206    0.157  -13.596   13.600    0.140
+   25  (rho0)       11    113   22   -0.800    0.111 -112.157  112.163    0.837
+   26  pi+           1    211   22    0.241   -0.646   -4.564    4.618    0.140
+   27  (rho0)       11    113   22   -0.146    0.502  -12.914   12.952    0.841
+   28  (rho0)       11    113   22   -0.085   -0.600  -11.632   11.679    0.849
+   29  (rho0)       11    113   22   -0.240    0.496   -7.911    7.975    0.839
+   30  (D*-)        11   -413   22   -1.027    0.087   -5.317    5.777    2.010
+   31  (D+)         11    411   21    0.562   -0.432   -9.025    9.244    1.869
+   32  (pi0)        11    111   21    0.057   -0.068   -0.828    0.843    0.135
+   33  pi+           1    211   23   -0.215   -0.287  -49.152   49.154    0.140
+   34  (pi0)        11    111   23    0.076   -0.173  -42.058   42.058    0.135
+   35  pi+           1    211   25   -0.129    0.297  -18.710   18.713    0.140
+   36  pi-           1   -211   25   -0.672   -0.186  -93.448   93.450    0.140
+   37  pi-           1   -211   27    0.140    0.619   -8.123    8.149    0.140
+   38  pi+           1    211   27   -0.286   -0.117   -4.791    4.803    0.140
+   39  pi+           1    211   28   -0.019   -0.681  -11.030   11.052    0.140
+   40  pi-           1   -211   28   -0.066    0.081   -0.602    0.627    0.140
+   41  pi-           1   -211   29   -0.308    0.675   -5.463    5.515    0.140
+   42  pi+           1    211   29    0.068   -0.180   -2.449    2.460    0.140
+   43  (D~0)        11   -421   30   -0.986    0.055   -4.986    5.414    1.865
+   44  pi-           1   -211   30   -0.041    0.032   -0.331    0.363    0.140
+   45  K-            1   -321   31    0.855   -0.654   -5.950    6.067    0.494
+   46  pi+           1    211   31   -0.465    0.203   -2.603    2.656    0.140
+   47  pi+           1    211   31    0.172    0.018   -0.473    0.522    0.140
+   48  gamma         1     22   32    0.101   -0.047   -0.616    0.626    0.000
+   49  gamma         1     22   32   -0.044   -0.020   -0.212    0.217    0.000
+   50  gamma         1     22   34   -0.026   -0.058  -20.321   20.321    0.000
+   51  gamma         1     22   34    0.101   -0.115  -21.737   21.737    0.000
+   52  (K0)         11    311   43    0.095   -0.178   -0.561    0.777    0.498
+   53  (rho0)       11    113   43   -1.081    0.233   -4.425    4.637    0.839
+   54  (K_S0)       11    310   52    0.095   -0.178   -0.561    0.777    0.498
+   55  pi-           1   -211   53   -1.167    0.291   -3.968    4.148    0.140
+   56  pi+           1    211   53    0.086   -0.058   -0.457    0.489    0.140
+   57  pi+           1    211   54   -0.115   -0.170   -0.419    0.487    0.140
+   58  pi-           1   -211   54    0.210   -0.007   -0.142    0.290    0.140
+                   sum:  0.00        -0.000   -0.000 -255.000  295.002  148.327
+
+ AVERAGE TIME PER EVENT AFTER      30000 EVENTS:    4.59E-04 SEC
+
+
+ ***** Event No        40000
+
+ CHANNEL =   1         X            Y            Q2
+ leptonic:          0.263E-02    0.177E-01    0.103E+01
+ hadronic:          0.263E-02    0.177E-01    0.103E+01
+ scaled:            0.263E-02    0.177E-01    0.103E+01
+-----------         Px          Py          Pz          E           M
+ HS e-scat:      -0.9994     -0.1019     19.6326     19.6583      0.0005
+ HS q-scat:       0.9994      0.1019     -0.3571      1.0662      0.0000
+ HS ga-rad:       0.0000      0.0000      0.0000      0.0000      0.0000
+
+ LST(21) =   0
+
+
+
+                            Event listing (summary)
+
+    I  particle/jet KS     KF orig    p_x      p_y      p_z       E        m
+
+    1  !e-!         21     11    0    0.000    0.000   20.000   20.000    0.001
+    2  !p+!         21   2212    0    0.000    0.000 -274.998  275.000    0.938
+    3  !Z0!         21     23    1    0.999    0.102    0.367    0.342   -1.014
+    4  e-            1     11    1   -0.999   -0.102   19.633   19.658    0.001
+    5  !u!          21      2    2    0.068   -0.419   -0.864    0.962    0.000
+    6  !u!          21      2    5    0.068   -0.419   -0.864    0.962    0.000
+    7  !u!          21      2    6    0.932   -0.332   -0.332    1.044    0.006
+    8  (u)          13      2    0    0.932   -0.332   -0.332    1.044    0.006
+    9  (ud_1)       13   2103    2    0.069    0.433 -274.302  274.303    0.450
+   10  (u)       A  12      2    8    0.932   -0.332   -0.332    1.044    0.006
+   11  (ud_1)    V  11   2103    9    0.069    0.433 -274.302  274.303    0.450
+   12  (string)     11     92   10    1.002    0.101 -274.634  275.347   19.767
+   13  (rho+)       11    213   12    0.727   -0.743   -1.512    1.975    0.729
+   14  (rho0)       11    113   12    0.077    0.048   -2.867    2.954    0.705
+   15  (omega)      11    223   12   -0.112    0.365   -2.419    2.548    0.701
+   16  (pi0)        11    111   12    0.363    0.492  -59.970   59.974    0.135
+   17  (K0)         11    311   12   -0.337   -0.053  -14.370   14.383    0.498
+   18  (K*-)        11   -323   12    0.755   -0.319  -65.301   65.312    0.903
+   19  (Delta+)     11   2214   12   -0.471    0.311 -128.195  128.202    1.249
+   20  pi+           1    211   13    0.499   -0.623   -1.472    1.680    0.140
+   21  (pi0)        11    111   13    0.229   -0.120   -0.040    0.294    0.135
+   22  pi-           1   -211   14    0.336    0.120   -1.211    1.270    0.140
+   23  pi+           1    211   14   -0.260   -0.072   -1.656    1.683    0.140
+   24  pi+           1    211   15    0.012    0.133   -0.179    0.263    0.140
+   25  pi-           1   -211   15   -0.087    0.031   -0.514    0.541    0.140
+   26  (pi0)        11    111   15   -0.036    0.202   -1.726    1.744    0.135
+   27  gamma         1     22   16    0.211    0.264  -39.239   39.241    0.000
+   28  gamma         1     22   16    0.152    0.229  -20.731   20.733    0.000
+   29  K_L0          1    130   17   -0.337   -0.053  -14.370   14.383    0.498
+   30  (K~0)        11   -311   18    0.380   -0.460  -47.285   47.291    0.498
+   31  pi-           1   -211   18    0.375    0.141  -18.016   18.021    0.140
+   32  n0            1   2112   19   -0.421    0.131  -79.583   79.590    0.940
+   33  pi+           1    211   19   -0.049    0.179  -48.611   48.612    0.140
+   34  gamma         1     22   21    0.154   -0.011    0.006    0.154    0.000
+   35  gamma         1     22   21    0.075   -0.109   -0.046    0.140    0.000
+   36  gamma         1     22   26    0.005    0.147   -1.500    1.507    0.000
+   37  gamma         1     22   26   -0.041    0.055   -0.227    0.237    0.000
+   38  K_L0          1    130   30    0.380   -0.460  -47.285   47.291    0.498
+                   sum:  0.00         0.002   -0.001 -255.002  295.005  148.331
+
+ AVERAGE TIME PER EVENT AFTER      40000 EVENTS:    4.58E-04 SEC
+
+
+ ***** Event No        50000
+
+ CHANNEL =   1         X            Y            Q2
+ leptonic:          0.217E-02    0.229E+00    0.110E+02
+ hadronic:          0.217E-02    0.229E+00    0.110E+02
+ scaled:            0.217E-02    0.229E+00    0.110E+02
+-----------         Px          Py          Pz          E           M
+ HS e-scat:      -0.7711     -2.8031     15.2738     15.5480      0.0005
+ HS q-scat:       0.7711      2.8031      4.1287      5.0496      0.0000
+ HS ga-rad:       0.0000      0.0000      0.0000      0.0000      0.0000
+
+ LST(21) =   0
+
+
+
+                            Event listing (summary)
+
+    I  particle/jet KS     KF orig    p_x      p_y      p_z       E        m
+
+    1  !e-!         21     11    0    0.000    0.000   20.000   20.000    0.001
+    2  !p+!         21   2212    0    0.000    0.000 -274.998  275.000    0.938
+    3  !Z0!         21     23    1    0.771    2.803    4.726    4.452   -3.312
+    4  e-            1     11    1   -0.771   -2.803   15.274   15.548    0.001
+    5  !g!          21     21    2    0.061   -0.361   -8.909    8.916   -0.000
+    6  !d!          21      1    5   -0.683   -0.317   -0.891    0.518   -1.045
+    7  !d!          21      1    6    0.088    2.484    3.832    4.964    1.946
+    8  (d)          13      1    0    0.012   -0.336    0.392    0.516    0.010
+    9  (g)          13     21    0    0.076    2.819    3.440    4.448    0.000
+   10  (g)          13     21    5    0.032   -0.397   -0.066    0.404    0.000
+   11  (ud_0)       13   2101    2    0.375    0.259 -196.450  196.451    0.450
+   12  (d~)         13     -1    2    0.712    0.353   -7.952    7.995    0.225
+   13  (u)          13      2    2   -0.436    0.105  -69.637   69.639    0.225
+   14  (d)       A  12      1    8    0.012   -0.336    0.392    0.516    0.010
+   15  (g)       I  12     21   10    0.032   -0.397   -0.066    0.404    0.000
+   16  (g)       I  12     21    9    0.076    2.819    3.440    4.448    0.000
+   17  (d~)      V  11     -1   12    0.712    0.353   -7.952    7.995    0.225
+   18  (u)       A  12      2   13   -0.436    0.105  -69.637   69.639    0.225
+   19  (ud_0)    V  11   2101   11    0.375    0.259 -196.450  196.451    0.450
+   20  (cluster)    11     91   18   -0.061    0.363 -266.087  266.089    1.175
+   21  p+            1   2212   20   -0.190    0.214 -198.250  198.253    0.938
+   22  (pi0)        11    111   20    0.129    0.150  -67.836   67.837    0.135
+   23  (string)     11     92   14    0.832    2.440   -4.186   13.363   12.426
+   24  (rho0)       11    113   23   -0.089   -0.049    0.886    1.097    0.638
+   25  (omega)      11    223   23    0.315    0.262    0.166    0.895    0.779
+   26  (rho-)       11   -213   23   -0.003    0.578    0.466    1.156    0.886
+   27  (K*+)        11    323   23    0.090    0.118    0.154    0.934    0.909
+   28  (K*-)        11   -323   23    0.139    1.084    1.024    1.773    0.950
+   29  pi+           1    211   23    0.147   -0.086   -0.780    0.810    0.140
+   30  pi-           1   -211   23   -0.250   -0.090   -0.053    0.305    0.140
+   31  p+            1   2212   23    0.091    0.272   -3.220    3.367    0.938
+   32  n~0           1  -2112   23    0.394    0.350   -2.828    3.026    0.940
+   33  gamma         1     22   22    0.017   -0.018  -17.623   17.623    0.000
+   34  gamma         1     22   22    0.113    0.168  -50.213   50.213    0.000
+   35  pi+           1    211   24    0.114   -0.263    0.404    0.515    0.140
+   36  pi-           1   -211   24   -0.203    0.214    0.482    0.582    0.140
+   37  pi-           1   -211   25    0.078   -0.107    0.056    0.201    0.140
+   38  pi+           1    211   25    0.341    0.354    0.052    0.514    0.140
+   39  (pi0)        11    111   25   -0.105    0.016    0.057    0.181    0.135
+   40  pi-           1   -211   26    0.168   -0.170    0.158    0.319    0.140
+   41  (pi0)        11    111   26   -0.172    0.748    0.307    0.838    0.135
+   42  (K0)         11    311   27   -0.170   -0.056    0.240    0.581    0.498
+   43  pi+           1    211   27    0.259    0.174   -0.086    0.353    0.140
+   44  K-            1   -321   28    0.192    1.159    0.839    1.526    0.494
+   45  (pi0)        11    111   28   -0.054   -0.076    0.185    0.247    0.135
+   46  gamma         1     22   39   -0.034   -0.013    0.091    0.098    0.000
+   47  gamma         1     22   39   -0.070    0.028   -0.033    0.083    0.000
+   48  gamma         1     22   41    0.010    0.030   -0.008    0.032    0.000
+   49  gamma         1     22   41   -0.182    0.718    0.315    0.805    0.000
+   50  (K_S0)       11    310   42   -0.170   -0.056    0.240    0.581    0.498
+   51  gamma         1     22   45   -0.025   -0.111    0.155    0.192    0.000
+   52  gamma         1     22   45   -0.029    0.036    0.030    0.054    0.000
+   53  pi-           1   -211   50   -0.166    0.156    0.072    0.276    0.140
+   54  pi+           1    211   50   -0.004   -0.212    0.169    0.305    0.140
+                   sum:  0.00         0.000    0.000 -254.999  295.000  148.327
+
+ AVERAGE TIME PER EVENT AFTER      50000 EVENTS:    4.59E-04 SEC
+
+
+ ***** Event No        60000
+
+ CHANNEL =   1         X            Y            Q2
+ leptonic:          0.416E-02    0.150E-01    0.137E+01
+ hadronic:          0.416E-02    0.150E-01    0.137E+01
+ scaled:            0.416E-02    0.150E-01    0.137E+01
+-----------         Px          Py          Pz          E           M
+ HS e-scat:      -0.9759      0.6329     19.6828     19.7171      0.0005
+ HS q-scat:       0.9759     -0.6329     -0.8272      1.4273      0.0000
+ HS ga-rad:       0.0000      0.0000      0.0000      0.0000      0.0000
+
+ LST(21) =   0
+
+
+
+                            Event listing (summary)
+
+    I  particle/jet KS     KF orig    p_x      p_y      p_z       E        m
+
+    1  !e-!         21     11    0    0.000    0.000   20.000   20.000    0.001
+    2  !p+!         21   2212    0    0.000    0.000 -274.998  275.000    0.938
+    3  !Z0!         21     23    1    0.976   -0.633    0.317    0.283   -1.172
+    4  e-            1     11    1   -0.976    0.633   19.683   19.717    0.001
+    5  !g!          21     21    2   -0.055    0.326   -5.643    5.652   -0.000
+    6  !g!          21     21    5   -0.055    0.326   -5.643    5.652   -0.000
+    7  !u!          21      2    6    0.800   -1.194   -4.373    4.603    0.006
+    8  !u~!         21     -2    6    0.108    0.895   -0.909    1.281    0.006
+    9  (u)          13      2    6    0.800   -1.194   -4.373    4.603    0.006
+   10  (ud_0)       13   2101    2    0.217    0.073 -120.699  120.700    0.450
+   11  (u~)         13     -2    6    0.108    0.895   -0.909    1.281    0.006
+   12  (u)          13      2    2   -0.146   -0.409 -148.693  148.694    0.225
+   13  (u)       A  12      2    9    0.800   -1.194   -4.373    4.603    0.006
+   14  (u~)      V  11     -2   11    0.108    0.895   -0.909    1.281    0.006
+   15  (u)       A  12      2   12   -0.146   -0.409 -148.693  148.694    0.225
+   16  (ud_0)    V  11   2101   10    0.217    0.073 -120.699  120.700    0.450
+   17  (cluster)    11     91   15    0.071   -0.337 -269.392  269.394    0.940
+   18  p+            1   2212   17    0.071   -0.337 -269.392  269.394    0.938
+   19  (string)     11     92   13    0.907   -0.298   -5.282    5.884    2.409
+   20  pi+           1    211   19    0.185   -0.328   -2.186    2.222    0.140
+   21  (rho-)       11   -213   19    0.073    0.358   -1.969    2.196    0.901
+   22  (rho0)       11    113   19    0.650   -0.329   -1.127    1.465    0.588
+   23  pi-           1   -211   21    0.017    0.429   -1.982    2.033    0.140
+   24  (pi0)        11    111   21    0.056   -0.070    0.013    0.163    0.135
+   25  pi-           1   -211   22    0.562   -0.426   -1.013    1.243    0.140
+   26  pi+           1    211   22    0.087    0.097   -0.114    0.223    0.140
+   27  gamma         1     22   24   -0.038   -0.047   -0.014    0.062    0.000
+   28  gamma         1     22   24    0.094   -0.023    0.027    0.101    0.000
+                   sum:  0.00         0.003   -0.002 -254.992  294.995  148.328
+
+ AVERAGE TIME PER EVENT AFTER      60000 EVENTS:    4.66E-04 SEC
+
+
+ ***** Event No        70000
+
+ CHANNEL =   1         X            Y            Q2
+ leptonic:          0.255E-02    0.173E+00    0.969E+01
+ hadronic:          0.255E-02    0.173E+00    0.969E+01
+ scaled:            0.255E-02    0.173E+00    0.969E+01
+-----------         Px          Py          Pz          E           M
+ HS e-scat:       1.2253     -2.5520     16.4178     16.6601      0.0005
+ HS q-scat:      -1.2253      2.5520      2.8822      4.0400      0.0000
+ HS ga-rad:       0.0000      0.0000      0.0000      0.0000      0.0000
+
+ LST(21) =   0
+
+
+
+                            Event listing (summary)
+
+    I  particle/jet KS     KF orig    p_x      p_y      p_z       E        m
+
+    1  !e-!         21     11    0    0.000    0.000   20.000   20.000    0.001
+    2  !p+!         21   2212    0    0.000    0.000 -274.998  275.000    0.938
+    3  !Z0!         21     23    1   -1.225    2.552    3.582    3.340   -3.113
+    4  e-            1     11    1    1.225   -2.552   16.418   16.660    0.001
+    5  !u!          21      2    2    0.092    0.305 -110.950  110.950   -0.000
+    6  !c!          21      4    5   -0.307    1.289   -1.834    1.348   -1.818
+    7  !c!          21      4    6   -1.532    3.841    1.748    4.688    1.350
+    8  (c)          13      4    0   -1.532    3.841    1.748    4.688    1.350
+    9  (ud_0)       13   2101    2   -0.092   -0.305 -164.080  164.081    0.450
+   10  (c~)         13     -4    5   -0.811   -2.404  -11.196   11.559    1.350
+   11  (g)          13     21    5    0.067    0.239   -1.230    1.255    0.000
+   12  (g)          13     21    5    0.210    0.385   -1.268    1.342    0.000
+   13  (g)          13     21    5    0.068   -0.030   -0.234    0.245    0.000
+   14  (g)          13     21    5    0.490   -0.146  -22.122   22.127    0.000
+   15  (u)          13      2    5    0.374    0.970  -73.061   73.070    0.325
+   16  (c)       A  12      4    8   -1.532    3.841    1.748    4.688    1.350
+   17  (c~)      V  11     -4   10   -0.811   -2.404  -11.196   11.559    1.350
+   18  (u)       A  12      2   15    0.374    0.970  -73.061   73.070    0.325
+   19  (g)       I  12     21   14    0.490   -0.146  -22.122   22.127    0.000
+   20  (g)       I  12     21   13    0.068   -0.030   -0.234    0.245    0.000
+   21  (g)       I  12     21   12    0.210    0.385   -1.268    1.342    0.000
+   22  (g)       I  12     21   11    0.067    0.239   -1.230    1.255    0.000
+   23  (ud_0)    V  11   2101    9   -0.092   -0.305 -164.080  164.081    0.450
+   24  (string)     11     92   16   -2.343    1.438   -9.448   16.248   12.929
+   25  (D0)         11    421   24   -1.410    3.241    1.715    4.348    1.865
+   26  (omega)      11    223   24   -0.281    0.402   -1.244    1.548    0.780
+   27  (D~0)        11   -421   24   -0.653   -2.205   -9.919   10.351    1.865
+   28  (string)     11     92   18    1.117    1.114 -261.995  262.120    7.942
+   29  (omega)      11    223   28    0.427    0.615  -53.546   53.556    0.781
+   30  K+            1    321   28    0.028   -0.392  -13.860   13.874    0.494
+   31  K-            1   -321   28    0.450    0.667  -27.100   27.116    0.494
+   32  K+            1    321   28    0.216   -0.534  -26.272   26.283    0.494
+   33  K-            1   -321   28   -0.093    1.355  -29.014   29.050    0.494
+   34  (rho+)       11    213   28    0.296   -0.796  -27.909   27.937    0.908
+   35  pi-           1   -211   28   -0.058    0.196  -24.246   24.247    0.140
+   36  p+            1   2212   28   -0.149    0.005  -60.050   60.057    0.938
+   37  (K~0)        11   -311   25   -0.232    0.502    0.067    0.747    0.498
+   38  pi+           1    211   25   -0.609    1.666    0.881    1.986    0.140
+   39  pi-           1   -211   25    0.079    0.081    0.271    0.325    0.140
+   40  (pi0)        11    111   25   -0.647    0.991    0.495    1.290    0.135
+   41  pi-           1   -211   26   -0.133   -0.090   -0.165    0.270    0.140
+   42  pi+           1    211   26    0.110    0.228   -0.384    0.480    0.140
+   43  (pi0)        11    111   26   -0.257    0.264   -0.696    0.799    0.135
+   44  (K*0)        11    313   27   -1.149   -1.859   -7.429    7.785    0.803
+   45  (pi0)        11    111   27    0.497   -0.346   -2.490    2.566    0.135
+   46  pi-           1   -211   29    0.092    0.373  -31.172   31.175    0.140
+   47  pi+           1    211   29    0.331    0.184  -11.190   11.198    0.140
+   48  (pi0)        11    111   29    0.004    0.058  -11.183   11.184    0.135
+   49  pi+           1    211   34    0.292   -0.015  -14.890   14.894    0.140
+   50  (pi0)        11    111   34    0.004   -0.782  -13.019   13.043    0.135
+   51  K_L0          1    130   37   -0.232    0.502    0.067    0.747    0.498
+   52  gamma         1     22   40   -0.622    0.981    0.496    1.263    0.000
+   53  gamma         1     22   40   -0.025    0.010   -0.001    0.027    0.000
+   54  gamma         1     22   43   -0.045   -0.004   -0.130    0.137    0.000
+   55  gamma         1     22   43   -0.212    0.269   -0.566    0.661    0.000
+   56  (K0)         11    311   44   -0.426   -0.737   -3.069    3.223    0.498
+   57  (pi0)        11    111   44   -0.723   -1.123   -4.360    4.562    0.135
+   58  gamma         1     22   45    0.465   -0.272   -2.216    2.280    0.000
+   59  gamma         1     22   45    0.032   -0.074   -0.274    0.286    0.000
+   60  gamma         1     22   48   -0.022    0.028  -10.306   10.306    0.000
+   61  gamma         1     22   48    0.026    0.031   -0.877    0.878    0.000
+   62  gamma         1     22   50    0.017   -0.205   -2.553    2.561    0.000
+   63  gamma         1     22   50   -0.013   -0.577  -10.466   10.482    0.000
+   64  K_L0          1    130   56   -0.426   -0.737   -3.069    3.223    0.498
+   65  gamma         1     22   57   -0.163   -0.260   -0.821    0.876    0.000
+   66  gamma         1     22   57   -0.560   -0.863   -3.539    3.686    0.000
+                   sum:  0.00        -0.000    0.000 -255.026  295.028  148.335
+
+ AVERAGE TIME PER EVENT AFTER      70000 EVENTS:    4.62E-04 SEC
+
+
+ ***** Event No        80000
+
+ CHANNEL =   1         X            Y            Q2
+ leptonic:          0.228E-02    0.273E-01    0.137E+01
+ hadronic:          0.228E-02    0.273E-01    0.137E+01
+ scaled:            0.228E-02    0.273E-01    0.137E+01
+-----------         Px          Py          Pz          E           M
+ HS e-scat:       0.8015      0.8280     19.4374     19.4716      0.0005
+ HS q-scat:      -0.8015     -0.8280     -0.0632      1.1542      0.0000
+ HS ga-rad:       0.0000      0.0000      0.0000      0.0000      0.0000
+
+ LST(21) =   0
+
+
+
+                            Event listing (summary)
+
+    I  particle/jet KS     KF orig    p_x      p_y      p_z       E        m
+
+    1  !e-!         21     11    0    0.000    0.000   20.000   20.000    0.001
+    2  !p+!         21   2212    0    0.000    0.000 -274.998  275.000    0.938
+    3  !Z0!         21     23    1   -0.802   -0.828    0.563    0.528   -1.168
+    4  e-            1     11    1    0.802    0.828   19.437   19.472    0.001
+    5  !d~!         21     -1    2    0.356   -0.158  -39.024   39.026   -0.000
+    6  !d~!         21     -1    5    0.185   -0.259  -37.891   37.876   -1.122
+    7  !d~!         21     -1    6   -2.851   -0.864   -3.962    4.957    0.010
+    8  !g!          21     21    6    2.238   -0.219  -33.364   33.439    0.000
+    9  n0            1   2112    2   -0.279    0.259 -126.272  126.276    0.940
+   10  (d~)         13     -1    6   -2.458   -0.745   -3.415    4.273    0.010
+   11  (g)          13     21    6    1.126   -0.719   -7.948    8.059    0.000
+   12  (g)          13     21    6   -0.026   -0.440  -14.075   14.082    0.000
+   13  (g)          13     21    6   -0.065    0.291   -6.619    6.626    0.000
+   14  (g)          13     21    6    0.809    0.529   -5.269    5.357    0.000
+   15  (g)          13     21    5    0.170    0.101   -1.133    1.150    0.000
+   16  (u)          13      2    2   -0.080   -0.105 -109.707  109.708    0.225
+   17  (u)       A  12      2   16   -0.080   -0.105 -109.707  109.708    0.225
+   18  (g)       I  12     21   11    1.126   -0.719   -7.948    8.059    0.000
+   19  (g)       I  12     21   15    0.170    0.101   -1.133    1.150    0.000
+   20  (g)       I  12     21   14    0.809    0.529   -5.269    5.357    0.000
+   21  (g)       I  12     21   13   -0.065    0.291   -6.619    6.626    0.000
+   22  (g)       I  12     21   12   -0.026   -0.440  -14.075   14.082    0.000
+   23  (d~)      V  11     -1   10   -2.458   -0.745   -3.415    4.273    0.010
+   24  (string)     11     92   17   -0.522   -1.087 -148.166  149.254   17.952
+   25  (pi0)        11    111   24   -0.107    0.305  -18.540   18.543    0.135
+   26  pi+           1    211   24   -0.258   -0.389  -60.776   60.778    0.140
+   27  pi-           1   -211   24    0.490    0.288  -17.360   17.370    0.140
+   28  (rho0)       11    113   24    0.731   -0.709  -17.491   17.546    0.938
+   29  pi+           1    211   24    0.661    0.476  -13.608   13.633    0.140
+   30  (K0)         11    311   24   -0.081    0.004   -2.583    2.632    0.498
+   31  (K*~0)       11   -313   24    0.212   -0.442   -5.805    5.895    0.898
+   32  (omega)      11    223   24   -0.019    0.135   -2.966    3.068    0.772
+   33  (rho-)       11   -213   24   -0.017   -0.483   -4.184    4.290    0.814
+   34  pi+           1    211   24   -0.505    0.305   -1.318    1.451    0.140
+   35  (eta')       11    331   24   -1.629   -0.577   -3.534    4.049    0.958
+   36  gamma         1     22   25   -0.069    0.258  -17.026   17.028    0.000
+   37  gamma         1     22   25   -0.038    0.047   -1.514    1.515    0.000
+   38  pi+           1    211   28   -0.027    0.149   -1.650    1.663    0.140
+   39  pi-           1   -211   28    0.758   -0.858  -15.841   15.883    0.140
+   40  K_L0          1    130   30   -0.081    0.004   -2.583    2.632    0.498
+   41  (K~0)        11   -311   31    0.227   -0.452   -5.621    5.665    0.498
+   42  (pi0)        11    111   31   -0.015    0.010   -0.184    0.229    0.135
+   43  pi-           1   -211   32    0.088   -0.127   -1.931    1.943    0.140
+   44  pi+           1    211   32   -0.021    0.214   -0.457    0.524    0.140
+   45  (pi0)        11    111   32   -0.086    0.048   -0.577    0.601    0.135
+   46  pi-           1   -211   33    0.161   -0.149   -0.357    0.442    0.140
+   47  (pi0)        11    111   33   -0.178   -0.333   -3.827    3.848    0.135
+   48  gamma         1     22   35   -0.186    0.058   -0.202    0.281    0.000
+   49  (rho0)       11    113   35   -1.443   -0.635   -3.332    3.768    0.782
+   50  (K_S0)       11    310   41    0.227   -0.452   -5.621    5.665    0.498
+   51  gamma         1     22   42   -0.075    0.008   -0.114    0.137    0.000
+   52  gamma         1     22   42    0.060    0.001   -0.071    0.093    0.000
+   53  gamma         1     22   45   -0.028   -0.045   -0.127    0.137    0.000
+   54  gamma         1     22   45   -0.058    0.093   -0.451    0.464    0.000
+   55  gamma         1     22   47    0.013   -0.009   -0.059    0.062    0.000
+   56  gamma         1     22   47   -0.191   -0.324   -3.768    3.787    0.000
+   57  pi+           1    211   49   -1.160   -0.173   -1.988    2.312    0.140
+   58  pi-           1   -211   49   -0.283   -0.462   -1.344    1.456    0.140
+   59  pi+           1    211   50    0.155   -0.439   -5.046    5.069    0.140
+   60  pi-           1   -211   50    0.073   -0.013   -0.575    0.596    0.140
+                   sum:  0.00        -0.000   -0.000 -255.000  295.002  148.327
+
+ AVERAGE TIME PER EVENT AFTER      80000 EVENTS:    4.59E-04 SEC
+
+
+ ***** Event No        90000
+
+ CHANNEL =   1         X            Y            Q2
+ leptonic:          0.165E-02    0.766E-01    0.278E+01
+ hadronic:          0.165E-02    0.766E-01    0.278E+01
+ scaled:            0.165E-02    0.766E-01    0.278E+01
+-----------         Px          Py          Pz          E           M
+ HS e-scat:       1.3942      0.7904     18.4325     18.5020      0.0005
+ HS q-scat:      -1.3942     -0.7904      1.1139      1.9517      0.0000
+ HS ga-rad:       0.0000      0.0000      0.0000      0.0000      0.0000
+
+ LST(21) =   0
+
+
+
+                            Event listing (summary)
+
+    I  particle/jet KS     KF orig    p_x      p_y      p_z       E        m
+
+    1  !e-!         21     11    0    0.000    0.000   20.000   20.000    0.001
+    2  !p+!         21   2212    0    0.000    0.000 -274.998  275.000    0.938
+    3  !Z0!         21     23    1   -1.394   -0.790    1.568    1.498   -1.668
+    4  e-            1     11    1    1.394    0.790   18.432   18.502    0.001
+    5  !d!          21      1    2    0.052   -0.358  -91.537   91.538   -0.000
+    6  !g!          21     21    5   -2.417    1.341   -4.228    4.053   -3.016
+    7  !u!          21      2    6   -0.863    1.282   -1.842    2.404    0.006
+    8  !u~!         21     -2    6   -2.949   -0.731   -0.818    3.146    0.006
+    9  (u)          13      2    6   -0.863    1.282   -1.842    2.404    0.006
+   10  (g)          13     21    5    1.989    0.104  -17.242   17.357    0.000
+   11  (uu_1)       13   2203    2   -0.052    0.358 -183.440  183.441    0.450
+   12  (u~)         13     -2    6   -2.949   -0.731   -0.818    3.146    0.006
+   13  (g)          13     21    5    1.120   -0.921  -21.938   21.986    0.000
+   14  (d)          13      1    5   -0.639   -0.882  -48.129   48.142    0.325
+   15  (u)       A  12      2    9   -0.863    1.282   -1.842    2.404    0.006
+   16  (g)       I  12     21   10    1.989    0.104  -17.242   17.357    0.000
+   17  (g)       I  12     21   13    1.120   -0.921  -21.938   21.986    0.000
+   18  (u~)      V  11     -2   12   -2.949   -0.731   -0.818    3.146    0.006
+   19  (d)       A  12      1   14   -0.639   -0.882  -48.129   48.142    0.325
+   20  (uu_1)    V  11   2203   11   -0.052    0.358 -183.440  183.441    0.450
+   21  (string)     11     92   15   -0.703   -0.266  -41.841   44.893   16.254
+   22  (rho0)       11    113   21   -0.164    0.392   -2.207    2.390    0.813
+   23  pi+           1    211   21   -0.257    0.217   -0.199    0.415    0.140
+   24  (pi0)        11    111   21   -0.024    0.079   -0.408    0.438    0.135
+   25  pi-           1   -211   21    0.203    0.131   -1.485    1.511    0.140
+   26  (rho+)       11    213   21    1.120    0.578  -12.075   12.190    1.100
+   27  (omega)      11    223   21   -0.322   -0.519   -4.890    4.991    0.785
+   28  pi-           1   -211   21    0.752    0.239   -4.090    4.168    0.140
+   29  (K*+)        11    323   21    0.322   -0.289   -5.418    5.512    0.918
+   30  (K*-)        11   -323   21   -0.013   -0.384   -7.404    7.464    0.858
+   31  (pi0)        11    111   21    0.198   -0.014   -0.194    0.309    0.135
+   32  pi+           1    211   21   -0.394   -0.511   -1.014    1.210    0.140
+   33  (rho-)       11   -213   21   -0.308    0.162   -0.085    0.563    0.434
+   34  (K*+)        11    323   21   -1.228   -0.361   -1.789    2.428    1.027
+   35  (K*-)        11   -323   21   -0.589    0.015   -0.581    1.306    1.010
+   36  (string)     11     92   19   -0.691   -0.524 -231.568  231.583    2.425
+   37  (Delta0)     11   2114   36   -0.170   -0.428  -85.557   85.568    1.304
+   38  (rho+)       11    213   36   -0.521   -0.095 -146.011  146.014    0.797
+   39  pi-           1   -211   22   -0.279   -0.088   -1.374    1.411    0.140
+   40  pi+           1    211   22    0.116    0.480   -0.833    0.978    0.140
+   41  gamma         1     22   24    0.042    0.000   -0.213    0.217    0.000
+   42  gamma         1     22   24   -0.067    0.078   -0.195    0.221    0.000
+   43  pi+           1    211   26   -0.115    0.340   -2.047    2.083    0.140
+   44  (pi0)        11    111   26    1.235    0.238  -10.027   10.107    0.135
+   45  pi-           1   -211   27   -0.150   -0.135   -1.675    1.693    0.140
+   46  pi+           1    211   27   -0.281   -0.010   -1.190    1.230    0.140
+   47  (pi0)        11    111   27    0.109   -0.374   -2.025    2.067    0.135
+   48  K+            1    321   29    0.389   -0.101   -4.899    4.940    0.494
+   49  (pi0)        11    111   29   -0.067   -0.188   -0.519    0.573    0.135
+   50  K-            1   -321   30   -0.054   -0.310   -7.062    7.086    0.494
+   51  (pi0)        11    111   30    0.041   -0.074   -0.343    0.378    0.135
+   52  gamma         1     22   31    0.127    0.003   -0.032    0.130    0.000
+   53  gamma         1     22   31    0.072   -0.017   -0.163    0.178    0.000
+   54  pi-           1   -211   33   -0.182    0.090    0.123    0.275    0.140
+   55  (pi0)        11    111   33   -0.126    0.072   -0.208    0.287    0.135
+   56  (K0)         11    311   34   -1.280   -0.266   -1.310    1.916    0.498
+   57  pi+           1    211   34    0.052   -0.095   -0.480    0.511    0.140
+   58  (K~0)        11   -311   35   -0.700    0.084   -0.672    1.094    0.498
+   59  pi-           1   -211   35    0.111   -0.069    0.091    0.212    0.140
+   60  p+            1   2212   37   -0.241   -0.128  -73.250   73.257    0.938
+   61  pi-           1   -211   37    0.071   -0.300  -12.306   12.311    0.140
+   62  pi+           1    211   38   -0.344   -0.372  -56.837   56.839    0.140
+   63  (pi0)        11    111   38   -0.178    0.277  -89.174   89.175    0.135
+   64  gamma         1     22   44    0.723    0.207   -5.991    6.038    0.000
+   65  gamma         1     22   44    0.512    0.031   -4.036    4.069    0.000
+   66  gamma         1     22   47    0.024   -0.268   -1.152    1.183    0.000
+   67  gamma         1     22   47    0.085   -0.106   -0.873    0.884    0.000
+   68  gamma         1     22   49   -0.055   -0.030   -0.268    0.276    0.000
+   69  gamma         1     22   49   -0.012   -0.158   -0.251    0.297    0.000
+   70  gamma         1     22   51   -0.029   -0.013   -0.229    0.232    0.000
+   71  gamma         1     22   51    0.070   -0.060   -0.113    0.146    0.000
+   72  gamma         1     22   55   -0.112    0.079   -0.081    0.159    0.000
+   73  gamma         1     22   55   -0.013   -0.007   -0.127    0.128    0.000
+   74  (K_S0)       11    310   56   -1.280   -0.266   -1.310    1.916    0.498
+   75  (K_S0)       11    310   58   -0.700    0.084   -0.672    1.094    0.498
+   76  gamma         1     22   63   -0.065    0.020  -11.310   11.310    0.000
+   77  gamma         1     22   63   -0.113    0.257  -77.865   77.865    0.000
+   78  pi+           1    211   74   -0.795   -0.157   -1.063    1.344    0.140
+   79  pi-           1   -211   74   -0.485   -0.109   -0.247    0.573    0.140
+   80  (pi0)        11    111   75   -0.445   -0.151   -0.417    0.643    0.135
+   81  (pi0)        11    111   75   -0.255    0.235   -0.255    0.451    0.135
+   82  gamma         1     22   80   -0.256   -0.153   -0.230    0.376    0.000
+   83  gamma         1     22   80   -0.190    0.002   -0.187    0.267    0.000
+   84  gamma         1     22   81   -0.160    0.057   -0.118    0.207    0.000
+   85  gamma         1     22   81   -0.094    0.178   -0.138    0.244    0.000
+                   sum:  0.00         0.000    0.000 -254.976  294.978  148.320
+
+ AVERAGE TIME PER EVENT AFTER      90000 EVENTS:    4.62E-04 SEC
+
+
+ ***** Event No       100000
+
+ CHANNEL =   1         X            Y            Q2
+ leptonic:          0.309E-01    0.221E-01    0.151E+02
+ hadronic:          0.309E-01    0.221E-01    0.151E+02
+ scaled:            0.309E-01    0.221E-01    0.151E+02
+-----------         Px          Py          Pz          E           M
+ HS e-scat:      -1.7015     -3.4409     19.3688     19.7455      0.0005
+ HS q-scat:       1.7015      3.4410     -7.8752      8.7609      0.0000
+ HS ga-rad:       0.0000      0.0000      0.0000      0.0000      0.0000
+
+ LST(21) =   0
+
+
+
+                            Event listing (summary)
+
+    I  particle/jet KS     KF orig    p_x      p_y      p_z       E        m
+
+    1  !e-!         21     11    0    0.000    0.000   20.000   20.000    0.001
+    2  !p+!         21   2212    0    0.000    0.000 -274.998  275.000    0.938
+    3  !Z0!         21     23    1    1.701    3.441    0.631    0.255   -3.882
+    4  e-            1     11    1   -1.701   -3.441   19.369   19.745    0.001
+    5  !g!          21     21    2    0.479   -0.329  -20.499   20.508   -0.000
+    6  !s!          21      3    5   -0.035   -0.889   -7.129    6.935   -1.878
+    7  !s!          21      3    6    1.649    2.516   -6.323    7.005    0.199
+    8  (s)          13      3    0    1.649    2.516   -6.323    7.005    0.199
+    9  (g)          13     21    5    0.845    0.963   -6.177    6.308    0.000
+   10  (g)          13     21    5   -0.242   -0.205   -4.772    4.783    0.000
+   11  (ud_1)       13   2103    2   -0.309   -0.177 -113.036  113.037    0.450
+   12  (s~)         13     -3    5   -0.089   -0.199   -2.421    2.482    0.500
+   13  (u)          13      2    2   -0.152    0.543 -141.640  141.641    0.225
+   14  (s)       A  12      3    8    1.649    2.516   -6.323    7.005    0.199
+   15  (g)       I  12     21    9    0.845    0.963   -6.177    6.308    0.000
+   16  (g)       I  12     21   10   -0.242   -0.205   -4.772    4.783    0.000
+   17  (ud_1)    V  11   2103   11   -0.309   -0.177 -113.036  113.037    0.450
+   18  (u)       A  12      2   13   -0.152    0.543 -141.640  141.641    0.225
+   19  (s~)      V  11     -3   12   -0.089   -0.199   -2.421    2.482    0.500
+   20  (string)     11     92   14    1.943    3.098 -130.308  131.133   14.227
+   21  (K*-)        11   -323   20    1.052    1.267   -5.692    6.001    0.946
+   22  (rho+)       11    213   20    1.318    1.346   -5.702    6.053    0.765
+   23  (pi0)        11    111   20    0.296    0.624   -1.755    1.891    0.135
+   24  (K0)         11    311   20   -0.183   -0.390  -13.546   13.562    0.498
+   25  (Sigma+)     11   3222   20   -0.530    0.263  -66.440   66.454    1.189
+   26  pi-           1   -211   20   -0.009   -0.013  -37.172   37.172    0.140
+   27  (string)     11     92   18   -0.241    0.343 -144.061  144.123    4.207
+   28  (rho+)       11    213   27    0.176    0.370  -41.694   41.704    0.839
+   29  (pi0)        11    111   27   -0.475   -0.161  -78.354   78.356    0.135
+   30  (pi0)        11    111   27   -0.200   -0.287  -18.692   18.696    0.135
+   31  (K0)         11    311   27    0.259    0.422   -5.321    5.367    0.498
+   32  (K~0)        11   -311   21    0.456    0.671   -3.913    4.027    0.498
+   33  pi-           1   -211   21    0.596    0.595   -1.780    1.974    0.140
+   34  pi+           1    211   22    0.195    0.186   -1.850    1.874    0.140
+   35  (pi0)        11    111   22    1.123    1.160   -3.852    4.179    0.135
+   36  gamma         1     22   23    0.184    0.496   -1.419    1.514    0.000
+   37  gamma         1     22   23    0.111    0.127   -0.337    0.377    0.000
+   38  (K_S0)       11    310   24   -0.183   -0.390  -13.546   13.562    0.498
+   39  p+            1   2212   25   -0.427    0.242  -44.446   44.459    0.938
+   40  (pi0)        11    111   25   -0.103    0.021  -21.994   21.995    0.135
+   41  pi+           1    211   28    0.151   -0.234  -15.731   15.734    0.140
+   42  (pi0)        11    111   28    0.025    0.604  -25.963   25.970    0.135
+   43  gamma         1     22   29   -0.484   -0.161  -77.288   77.290    0.000
+   44  gamma         1     22   29    0.009    0.000   -1.066    1.066    0.000
+   45  gamma         1     22   30    0.003   -0.055   -1.535    1.536    0.000
+   46  gamma         1     22   30   -0.204   -0.232  -17.157   17.160    0.000
+   47  K_L0          1    130   31    0.259    0.422   -5.321    5.367    0.498
+   48  K_L0          1    130   32    0.456    0.671   -3.913    4.027    0.498
+   49  gamma         1     22   35    1.108    1.157   -3.818    4.140    0.000
+   50  e+            1    -11   35    0.012    0.004   -0.033    0.035    0.001
+   51  e-            1     11   35    0.004   -0.000   -0.002    0.004    0.001
+   52  pi+           1    211   38   -0.310   -0.269   -8.751    8.762    0.140
+   53  pi-           1   -211   38    0.127   -0.121   -4.795    4.800    0.140
+   54  gamma         1     22   40   -0.061   -0.056  -10.399   10.400    0.000
+   55  gamma         1     22   40   -0.042    0.077  -11.595   11.595    0.000
+   56  gamma         1     22   42   -0.046    0.097   -4.691    4.693    0.000
+   57  gamma         1     22   42    0.071    0.507  -21.272   21.278    0.000
+                   sum:  0.00         0.000    0.000 -255.000  295.002  148.327
+
+ AVERAGE TIME PER EVENT AFTER     100000 EVENTS:    4.57E-04 SEC
+
+
+NUMBERS OF GENERATED EVENTS AND EFFICIENCIES
+
+TOTAL EVENT NUMBER      100000
+NEUTRAL CURRENT / ELASTIC + SOFT&VIRTUAL           100000       7.0259E-01
+
+ ******************************************************************************
+ Program performance 
+       100000 Events were accepted by HERACLES,
+       100000 Events passed fragmentation in LEPTO
+            0 Events passed fragmentation in SOPHIA,
+            0 Events failed fragmentation in LEPTO
+            0 Events failed fragmentation in SOPHIA
+
+ Distribution of flavors (DJ):
+          d         u         s         c         b         t
+       8576     38443      4120      6105        43         0
+       dbar      ubar      sbar      cbar      bbar      tbar
+       6689     25385      4254      6343        42         0
+
+
+ Errors in DJGEVT: Hadronization failed:
+ Nfail(1) =        0     Nfail(2)  =        0
+ Nfail(3) =        0     Nfail(4)  =      239
+ Nfail(5) =        0     Nfail(6)  =        0
+ Nfail(7) =        0     Nfail(8)  =        0
+ Nfail(9) =        0     Nfail(10) =        0
+
+
+ Energy-momentum mismatch: 
+ PmisT >  0.1: NMIS(1)  =        0
+ PmisT >  1.0: NMIS(2)  =        0
+ PmisT >  2.0: NMIS(3)  =        0
+ PmisT > 10.0: NMIS(4)  =        0
+ PmisL >  0.1: NMIS(5)  =      510
+ PmisL >  1.0: NMIS(6)  =        6
+ PmisL >  2.0: NMIS(7)  =        0
+ PmisL > 10.0: NMIS(8)  =        0
+     E >  0.1: NMIS(9)  =      519
+     E >  1.0: NMIS(10) =        6
+     E >  2.0: NMIS(11) =        0
+     E > 10.0: NMIS(12) =        0
+
+
+ *** SAMPLING INFORMATION FOR ALL CHANNELS WRITTEN ONTO UNIT LUNDAT=  9
